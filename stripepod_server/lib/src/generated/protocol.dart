@@ -12,8 +12,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
 import 'package:serverpod/protocol.dart' as _i2;
-import 'greeting.dart' as _i3;
-export 'greeting.dart';
+import 'product.dart' as _i3;
+export 'product.dart';
 
 class Protocol extends _i1.SerializationManagerServer {
   Protocol._();
@@ -32,11 +32,11 @@ class Protocol extends _i1.SerializationManagerServer {
     Type? t,
   ]) {
     t ??= T;
-    if (t == _i3.Greeting) {
-      return _i3.Greeting.fromJson(data) as T;
+    if (t == _i3.Product) {
+      return _i3.Product.fromJson(data) as T;
     }
-    if (t == _i1.getType<_i3.Greeting?>()) {
-      return (data != null ? _i3.Greeting.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i3.Product?>()) {
+      return (data != null ? _i3.Product.fromJson(data) : null) as T;
     }
     try {
       return _i2.Protocol().deserialize<T>(data, t);
@@ -49,8 +49,8 @@ class Protocol extends _i1.SerializationManagerServer {
     String? className = super.getClassNameForObject(data);
     if (className != null) return className;
     switch (data) {
-      case _i3.Greeting():
-        return 'Greeting';
+      case _i3.Product():
+        return 'Product';
     }
     className = _i2.Protocol().getClassNameForObject(data);
     if (className != null) {
@@ -65,8 +65,8 @@ class Protocol extends _i1.SerializationManagerServer {
     if (dataClassName is! String) {
       return super.deserializeByClassName(data);
     }
-    if (dataClassName == 'Greeting') {
-      return deserialize<_i3.Greeting>(data['data']);
+    if (dataClassName == 'Product') {
+      return deserialize<_i3.Product>(data['data']);
     }
     if (dataClassName.startsWith('serverpod.')) {
       data['className'] = dataClassName.substring(10);

@@ -27,7 +27,7 @@ class StripeApiClient {
         body: {
           'amount': '1000',
           'currency': 'usd',
-          'payment_method_types': '[card]',
+          'automatic_payment_methods': true,
         },
       );
       return response;

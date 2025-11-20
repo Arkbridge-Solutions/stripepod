@@ -12,24 +12,21 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'dart:async' as _i2;
-import 'package:stripepod_client/src/protocol/greeting.dart' as _i3;
+import 'package:stripepod_client/src/protocol/product.dart' as _i3;
 import 'protocol.dart' as _i4;
 
-/// This is an example endpoint that returns a greeting message through
-/// its [hello] method.
 /// {@category Endpoint}
-class EndpointGreeting extends _i1.EndpointRef {
-  EndpointGreeting(_i1.EndpointCaller caller) : super(caller);
+class EndpointProduct extends _i1.EndpointRef {
+  EndpointProduct(_i1.EndpointCaller caller) : super(caller);
 
   @override
-  String get name => 'greeting';
+  String get name => 'product';
 
-  /// Returns a personalized greeting message: "Hello {name}".
-  _i2.Future<_i3.Greeting> hello(String name) =>
-      caller.callServerEndpoint<_i3.Greeting>(
-        'greeting',
-        'hello',
-        {'name': name},
+  _i2.Future<_i3.Product> getProduct(int id) =>
+      caller.callServerEndpoint<_i3.Product>(
+        'product',
+        'getProduct',
+        {'id': id},
       );
 }
 
@@ -60,13 +57,13 @@ class Client extends _i1.ServerpodClientShared {
          disconnectStreamsOnLostInternetConnection:
              disconnectStreamsOnLostInternetConnection,
        ) {
-    greeting = EndpointGreeting(this);
+    product = EndpointProduct(this);
   }
 
-  late final EndpointGreeting greeting;
+  late final EndpointProduct product;
 
   @override
-  Map<String, _i1.EndpointRef> get endpointRefLookup => {'greeting': greeting};
+  Map<String, _i1.EndpointRef> get endpointRefLookup => {'product': product};
 
   @override
   Map<String, _i1.ModuleEndpointCaller> get moduleLookup => {};

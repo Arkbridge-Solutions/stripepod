@@ -1,2 +1,2 @@
-greeting:
-  - hello:
+product:
+  - getProduct:
