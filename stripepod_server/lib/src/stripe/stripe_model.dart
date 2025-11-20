@@ -11,4 +11,19 @@ class StripeApiException implements Exception {
 
   /// The original exception that caused this exception.
   final Object? originalException;
+
+  @override
+  String toString() => 'StripeApiException: $message';
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is StripeApiException &&
+        other.message == message &&
+        other.originalException == originalException;
+  }
+
+  @override
+  int get hashCode => Object.hash(message, originalException);
 }

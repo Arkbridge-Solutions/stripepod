@@ -27,13 +27,14 @@ class StripeApiClient {
         body: {
           'amount': priceInCents.toString(),
           'currency': 'usd',
-          'automatic_payment_methods': true.toString(),
+          'automatic_payment_methods[enabled]': 'true',
         },
       );
 
       if (response.statusCode != 200) {
         throw StripeApiException(
-          message: 'Failed to create payment intent',
+          message:
+              'Failed to create payment intent body: ${response.body} statusCode: ${response.statusCode}',
           originalException: response,
         );
       }
@@ -63,7 +64,7 @@ extension StripeSessionExtension on Session {
     } else {
       return StripeApiClient(
         stripeServerKey: passwords['stripeServerKey']!,
-        apiUrl: 'https://api.stripe.com/',
+        apiUrl: 'https://api.stripe.com',
       );
     }
   }

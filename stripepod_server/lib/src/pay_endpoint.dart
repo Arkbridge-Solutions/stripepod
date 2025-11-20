@@ -41,4 +41,19 @@ class ApiException implements Exception {
 
   final int statusCode;
   final String message;
+
+  @override
+  String toString() => 'ApiException: $message';
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is ApiException &&
+        other.statusCode == statusCode &&
+        other.message == message;
+  }
+
+  @override
+  int get hashCode => Object.hash(statusCode, message);
 }
