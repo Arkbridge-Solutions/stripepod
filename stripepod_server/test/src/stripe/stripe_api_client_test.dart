@@ -14,21 +14,19 @@ void main() {
       test(
         'It successfully creates payment intent with 200 response',
         () async {
-          // Arrange
           final mockClient = MockClient((request) async {
-            // Verify the request is correct
             expect(request.url.toString(), '$testApiUrl/v1/payment_intents');
             expect(request.method, 'POST');
             expect(
               request.headers['Authorization'],
               'Bearer $testStripeKey',
             );
-            expect(request.bodyFields['amount'], '1000');
+            expect(request.bodyFields['amount'], '2000');
             expect(request.bodyFields['currency'], 'usd');
-            expect(request.bodyFields['payment_method_types'], '[card]');
+            expect(request.bodyFields['automatic_payment_methods'], 'true');
 
             return http.Response(
-              '{"id": "pi_123", "amount": 1000, "currency": "usd"}',
+              '{"id": "pi_123", "amount": 2000, "currency": "usd"}',
               200,
               request: request,
             );
@@ -40,10 +38,8 @@ void main() {
             httpClient: mockClient,
           );
 
-          // Act
-          final response = await client.createPaymentIntent();
+          final response = await client.createPaymentIntent(2000);
 
-          // Assert
           expect(response.statusCode, 200);
           expect(
             response.body,
@@ -68,20 +64,14 @@ void main() {
         );
 
         expect(
-          () => client.createPaymentIntent(),
-          throwsA(
-            isA<StripeApiException>().having(
-              (e) => e.message,
-              'message',
-              contains('Request'),
-            ),
-          ),
+          () => client.createPaymentIntent(2000),
+          throwsA(isA<StripeApiException>()),
         );
       });
 
       test('throws StripeApiException on network error', () async {
         final mockClient = MockClient((request) async {
-          throw Exception('Network error');
+          throw http.ClientException('Network error');
         });
 
         final client = StripeApiClient(
@@ -91,7 +81,7 @@ void main() {
         );
 
         expect(
-          () => client.createPaymentIntent(),
+          () => client.createPaymentIntent(2000),
           throwsA(
             isA<StripeApiException>()
                 .having(

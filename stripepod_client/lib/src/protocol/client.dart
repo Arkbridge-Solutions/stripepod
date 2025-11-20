@@ -15,6 +15,22 @@ import 'dart:async' as _i2;
 import 'package:stripepod_client/src/protocol/product.dart' as _i3;
 import 'protocol.dart' as _i4;
 
+/// Endpoint that will create a payment intent and return the payment intent
+/// client secret
+/// {@category Endpoint}
+class EndpointPay extends _i1.EndpointRef {
+  EndpointPay(_i1.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'pay';
+
+  _i2.Future<String> pay(int productId) => caller.callServerEndpoint<String>(
+    'pay',
+    'pay',
+    {'productId': productId},
+  );
+}
+
 /// {@category Endpoint}
 class EndpointProduct extends _i1.EndpointRef {
   EndpointProduct(_i1.EndpointCaller caller) : super(caller);
@@ -57,13 +73,19 @@ class Client extends _i1.ServerpodClientShared {
          disconnectStreamsOnLostInternetConnection:
              disconnectStreamsOnLostInternetConnection,
        ) {
+    pay = EndpointPay(this);
     product = EndpointProduct(this);
   }
+
+  late final EndpointPay pay;
 
   late final EndpointProduct product;
 
   @override
-  Map<String, _i1.EndpointRef> get endpointRefLookup => {'product': product};
+  Map<String, _i1.EndpointRef> get endpointRefLookup => {
+    'pay': pay,
+    'product': product,
+  };
 
   @override
   Map<String, _i1.ModuleEndpointCaller> get moduleLookup => {};

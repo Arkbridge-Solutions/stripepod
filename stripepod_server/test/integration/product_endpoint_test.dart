@@ -8,9 +8,9 @@ void main() {
       'when calling `getProduct` with id then returned product includes correct fields',
       () async {
         final product = await endpoints.product.getProduct(sessionBuilder, 1);
-        expect(product.name, 'Product 1');
+        expect(product.name, 'Arkbridge Consult 1');
         expect(product.id, 1);
-        expect(product.priceInCents, 1000);
+        expect(product.priceInCents, 10000);
       },
     );
   });

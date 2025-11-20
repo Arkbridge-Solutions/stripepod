@@ -17,45 +17,37 @@ class StripeApiClient {
   final String _stripeServerKey;
   final http.Client _httpClient;
 
-  Future<http.Response> createPaymentIntent() async {
-    return _executeRequest(() async {
+  Future<http.Response> createPaymentIntent(int priceInCents) async {
+    try {
       final response = await _httpClient.post(
         Uri.parse('$_apiUrl/v1/payment_intents'),
         headers: {
           'Authorization': 'Bearer $_stripeServerKey',
         },
         body: {
-          'amount': '1000',
+          'amount': priceInCents.toString(),
           'currency': 'usd',
-          'automatic_payment_methods': true,
+          'automatic_payment_methods': true.toString(),
         },
       );
-      return response;
-    });
-  }
-}
 
-Future<http.Response> _executeRequest(
-  Future<http.Response> Function() executeRequest,
-) async {
-  try {
-    final response = await executeRequest();
+      if (response.statusCode != 200) {
+        throw StripeApiException(
+          message: 'Failed to create payment intent',
+          originalException: response,
+        );
+      }
 
-    if (response.statusCode == 200) {
       return response;
-    } else {
-      throw StripeApiException(
-        message: 'Request ${response.request?.url} failed',
-      );
-    }
-  } on Exception catch (e) {
-    if (e is StripeApiException) {
-      rethrow;
-    } else {
-      throw StripeApiException(
-        message: 'Failed to execute request',
-        originalException: e,
-      );
+    } catch (e) {
+      if (e is http.ClientException) {
+        throw StripeApiException(
+          message: 'Failed to execute request',
+          originalException: e,
+        );
+      } else {
+        rethrow;
+      }
     }
   }
 }
