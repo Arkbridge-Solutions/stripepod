@@ -125,8 +125,8 @@ class _PayScreenState extends State<PayScreen> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.indigo,
                     ),
-                    onPressed: loadingNotifier.value ? null : pay,
-                    child: loadingNotifier.value
+                    onPressed: loading ? null : pay,
+                    child: loading
                         ? Center(child: CircularProgressIndicator())
                         : Text('Pay', style: TextStyle(color: Colors.white)),
                   );
