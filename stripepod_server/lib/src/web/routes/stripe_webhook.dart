@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:serverpod/serverpod.dart';
+import 'package:stripepod_server/src/stripe/stripe_api_client.dart';
+import 'package:stripepod_server/src/stripe/stripe_webhook_functions.dart';
 import 'package:stripepod_server/src/stripe/stripe_webhook_verifier.dart';
 
 class StripeWebhookRoute extends Route {
@@ -28,8 +30,12 @@ class StripeWebhookRoute extends Route {
 
     switch (type) {
       case 'payment_intent.succeeded':
-        break;
       case 'payment_intent.failed':
+        await checkPaymentIntentAndUpdateStatus(
+          session: session,
+          paymentIntentId: payload['data']['object']['id'] as String,
+          stripeApiClient: session.stripeApiClient,
+        );
         break;
       default:
         break;

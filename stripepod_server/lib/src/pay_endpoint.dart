@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:serverpod/serverpod.dart';
+import 'package:stripepod_server/src/generated/protocol.dart';
 import 'package:stripepod_server/src/product_endpoint.dart';
 import 'package:stripepod_server/src/stripe/stripe_api_client.dart';
 
@@ -13,7 +14,7 @@ class PayEndpoint extends Endpoint {
 
   final StripeApiClient? _stripeApiClient;
 
-  Future<String> pay(Session session, int productId) async {
+  Future<StripePaymentInfo> pay(Session session, int productId) async {
     // Use injected client for testing, otherwise get from session
     final stripeApiClient = _stripeApiClient ?? session.stripeApiClient;
 
@@ -26,13 +27,38 @@ class PayEndpoint extends Endpoint {
       final json = jsonDecode(response.body);
 
       if (json['client_secret'] != null) {
-        return json['client_secret']!;
+        await Payment.db.insertRow(
+          session,
+          Payment(
+            stripeId: json['id']!,
+            amount: product.priceInCents,
+            currency: 'usd',
+            status: PaymentStatus.pending,
+            createdAt: DateTime.now(),
+          ),
+        );
+
+        return StripePaymentInfo(
+          paymentIntentId: json['id']!,
+          clientSecret: json['client_secret']!,
+        );
       } else {
         throw ApiException(500, 'Failed to create payment intent');
       }
     } on Exception catch (e) {
       throw ApiException(500, e.toString());
     }
+  }
+
+  Future<Payment> getPaymentById(Session session, String stripeIntentId) async {
+    final payment = await Payment.db.findFirstRow(
+      session,
+      where: (table) => table.stripeId.equals(stripeIntentId),
+    );
+    if (payment == null) {
+      throw ApiException(404, 'Payment not found');
+    }
+    return payment;
   }
 }
 

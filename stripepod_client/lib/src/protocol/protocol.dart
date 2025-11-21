@@ -11,8 +11,14 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
-import 'product.dart' as _i2;
-export 'product.dart';
+import 'model/payment.dart' as _i2;
+import 'model/payment_status.dart' as _i3;
+import 'model/product.dart' as _i4;
+import 'model/stripe_payment_info.dart' as _i5;
+export 'model/payment.dart';
+export 'model/payment_status.dart';
+export 'model/product.dart';
+export 'model/stripe_payment_info.dart';
 export 'client.dart';
 
 class Protocol extends _i1.SerializationManager {
@@ -28,11 +34,29 @@ class Protocol extends _i1.SerializationManager {
     Type? t,
   ]) {
     t ??= T;
-    if (t == _i2.Product) {
-      return _i2.Product.fromJson(data) as T;
+    if (t == _i2.Payment) {
+      return _i2.Payment.fromJson(data) as T;
     }
-    if (t == _i1.getType<_i2.Product?>()) {
-      return (data != null ? _i2.Product.fromJson(data) : null) as T;
+    if (t == _i3.PaymentStatus) {
+      return _i3.PaymentStatus.fromJson(data) as T;
+    }
+    if (t == _i4.Product) {
+      return _i4.Product.fromJson(data) as T;
+    }
+    if (t == _i5.StripePaymentInfo) {
+      return _i5.StripePaymentInfo.fromJson(data) as T;
+    }
+    if (t == _i1.getType<_i2.Payment?>()) {
+      return (data != null ? _i2.Payment.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i3.PaymentStatus?>()) {
+      return (data != null ? _i3.PaymentStatus.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i4.Product?>()) {
+      return (data != null ? _i4.Product.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i5.StripePaymentInfo?>()) {
+      return (data != null ? _i5.StripePaymentInfo.fromJson(data) : null) as T;
     }
     return super.deserialize<T>(data, t);
   }
@@ -42,8 +66,14 @@ class Protocol extends _i1.SerializationManager {
     String? className = super.getClassNameForObject(data);
     if (className != null) return className;
     switch (data) {
-      case _i2.Product():
+      case _i2.Payment():
+        return 'Payment';
+      case _i3.PaymentStatus():
+        return 'PaymentStatus';
+      case _i4.Product():
         return 'Product';
+      case _i5.StripePaymentInfo():
+        return 'StripePaymentInfo';
     }
     return null;
   }
@@ -54,8 +84,17 @@ class Protocol extends _i1.SerializationManager {
     if (dataClassName is! String) {
       return super.deserializeByClassName(data);
     }
+    if (dataClassName == 'Payment') {
+      return deserialize<_i2.Payment>(data['data']);
+    }
+    if (dataClassName == 'PaymentStatus') {
+      return deserialize<_i3.PaymentStatus>(data['data']);
+    }
     if (dataClassName == 'Product') {
-      return deserialize<_i2.Product>(data['data']);
+      return deserialize<_i4.Product>(data['data']);
+    }
+    if (dataClassName == 'StripePaymentInfo') {
+      return deserialize<_i5.StripePaymentInfo>(data['data']);
     }
     return super.deserializeByClassName(data);
   }

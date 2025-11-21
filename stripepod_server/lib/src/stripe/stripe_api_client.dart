@@ -18,8 +18,8 @@ class StripeApiClient {
   final http.Client _httpClient;
 
   Future<http.Response> createPaymentIntent(int priceInCents) async {
-    try {
-      final response = await _httpClient.post(
+    final response = await _executeRequest(
+      () => _httpClient.post(
         Uri.parse('$_apiUrl/v1/payment_intents'),
         headers: {
           'Authorization': 'Bearer $_stripeServerKey',
@@ -29,25 +29,45 @@ class StripeApiClient {
           'currency': 'usd',
           'automatic_payment_methods[enabled]': 'true',
         },
-      );
+      ),
+    );
 
-      if (response.statusCode != 200) {
+    return response;
+  }
+
+  Future<http.Response> getPaymentIntent(String paymentIntentId) async {
+    final response = await _executeRequest(
+      () => _httpClient.get(
+        Uri.parse('$_apiUrl/v1/payment_intents/$paymentIntentId'),
+        headers: {
+          'Authorization': 'Bearer $_stripeServerKey',
+        },
+      ),
+    );
+    return response;
+  }
+
+  Future<http.Response> _executeRequest(
+    Future<http.Response> Function() executeRequest,
+  ) async {
+    try {
+      final response = await executeRequest();
+
+      if (response.statusCode == 200) {
+        return response;
+      } else {
         throw StripeApiException(
-          message:
-              'Failed to create payment intent body: ${response.body} statusCode: ${response.statusCode}',
-          originalException: response,
+          message: 'Request ${response.request?.url} failed',
         );
       }
-
-      return response;
-    } catch (e) {
-      if (e is http.ClientException) {
+    } on Exception catch (e) {
+      if (e is StripeApiException) {
+        rethrow;
+      } else {
         throw StripeApiException(
           message: 'Failed to execute request',
           originalException: e,
         );
-      } else {
-        rethrow;
       }
     }
   }

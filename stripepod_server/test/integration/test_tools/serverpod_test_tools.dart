@@ -15,7 +15,10 @@
 import 'package:serverpod_test/serverpod_test.dart' as _i1;
 import 'package:serverpod/serverpod.dart' as _i2;
 import 'dart:async' as _i3;
-import 'package:stripepod_server/src/generated/product.dart' as _i4;
+import 'package:stripepod_server/src/generated/model/stripe_payment_info.dart'
+    as _i4;
+import 'package:stripepod_server/src/generated/model/payment.dart' as _i5;
+import 'package:stripepod_server/src/generated/model/product.dart' as _i6;
 import 'package:stripepod_server/src/generated/protocol.dart';
 import 'package:stripepod_server/src/generated/endpoints.dart';
 export 'package:serverpod_test/serverpod_test_public_exports.dart';
@@ -156,7 +159,7 @@ class _PayEndpoint {
 
   final _i2.SerializationManager _serializationManager;
 
-  _i3.Future<String> pay(
+  _i3.Future<_i4.StripePaymentInfo> pay(
     _i1.TestSessionBuilder sessionBuilder,
     int productId,
   ) async {
@@ -179,7 +182,38 @@ class _PayEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i3.Future<String>);
+                as _i3.Future<_i4.StripePaymentInfo>);
+        return _localReturnValue;
+      } finally {
+        await _localUniqueSession.close();
+      }
+    });
+  }
+
+  _i3.Future<_i5.Payment> getPaymentById(
+    _i1.TestSessionBuilder sessionBuilder,
+    String stripeIntentId,
+  ) async {
+    return _i1.callAwaitableFunctionAndHandleExceptions(() async {
+      var _localUniqueSession =
+          (sessionBuilder as _i1.InternalTestSessionBuilder).internalBuild(
+            endpoint: 'pay',
+            method: 'getPaymentById',
+          );
+      try {
+        var _localCallContext = await _endpointDispatch.getMethodCallContext(
+          createSessionCallback: (_) => _localUniqueSession,
+          endpointPath: 'pay',
+          methodName: 'getPaymentById',
+          parameters: _i1.testObjectToJson({'stripeIntentId': stripeIntentId}),
+          serializationManager: _serializationManager,
+        );
+        var _localReturnValue =
+            await (_localCallContext.method.call(
+                  _localUniqueSession,
+                  _localCallContext.arguments,
+                )
+                as _i3.Future<_i5.Payment>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -198,7 +232,7 @@ class _ProductEndpoint {
 
   final _i2.SerializationManager _serializationManager;
 
-  _i3.Future<_i4.Product> getProduct(
+  _i3.Future<_i6.Product> getProduct(
     _i1.TestSessionBuilder sessionBuilder,
     int id,
   ) async {
@@ -221,7 +255,7 @@ class _ProductEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i3.Future<_i4.Product>);
+                as _i3.Future<_i6.Product>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();

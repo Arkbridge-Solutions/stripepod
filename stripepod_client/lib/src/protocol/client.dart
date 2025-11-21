@@ -12,8 +12,11 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'dart:async' as _i2;
-import 'package:stripepod_client/src/protocol/product.dart' as _i3;
-import 'protocol.dart' as _i4;
+import 'package:stripepod_client/src/protocol/model/stripe_payment_info.dart'
+    as _i3;
+import 'package:stripepod_client/src/protocol/model/payment.dart' as _i4;
+import 'package:stripepod_client/src/protocol/model/product.dart' as _i5;
+import 'protocol.dart' as _i6;
 
 /// Endpoint that will create a payment intent and return the payment intent
 /// client secret
@@ -24,11 +27,19 @@ class EndpointPay extends _i1.EndpointRef {
   @override
   String get name => 'pay';
 
-  _i2.Future<String> pay(int productId) => caller.callServerEndpoint<String>(
-    'pay',
-    'pay',
-    {'productId': productId},
-  );
+  _i2.Future<_i3.StripePaymentInfo> pay(int productId) =>
+      caller.callServerEndpoint<_i3.StripePaymentInfo>(
+        'pay',
+        'pay',
+        {'productId': productId},
+      );
+
+  _i2.Future<_i4.Payment> getPaymentById(String stripeIntentId) =>
+      caller.callServerEndpoint<_i4.Payment>(
+        'pay',
+        'getPaymentById',
+        {'stripeIntentId': stripeIntentId},
+      );
 }
 
 /// {@category Endpoint}
@@ -38,8 +49,8 @@ class EndpointProduct extends _i1.EndpointRef {
   @override
   String get name => 'product';
 
-  _i2.Future<_i3.Product> getProduct(int id) =>
-      caller.callServerEndpoint<_i3.Product>(
+  _i2.Future<_i5.Product> getProduct(int id) =>
+      caller.callServerEndpoint<_i5.Product>(
         'product',
         'getProduct',
         {'id': id},
@@ -63,7 +74,7 @@ class Client extends _i1.ServerpodClientShared {
     bool? disconnectStreamsOnLostInternetConnection,
   }) : super(
          host,
-         _i4.Protocol(),
+         _i6.Protocol(),
          securityContext: securityContext,
          authenticationKeyManager: authenticationKeyManager,
          streamingConnectionTimeout: streamingConnectionTimeout,

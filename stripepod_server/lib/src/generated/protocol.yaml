@@ -1,4 +1,5 @@
 pay:
   - pay:
+  - getPaymentById:
 product:
   - getProduct:

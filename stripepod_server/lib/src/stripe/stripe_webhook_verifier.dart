@@ -2,7 +2,9 @@ import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
 
-/// Verifies a Stripe webhook signature.
+/// Verifies a Stripe webhook signature. To ensure the webhook is valid we
+/// verify the signature and check if the timestamp is within the tolerance
+/// period.
 bool verifyStripeSignature({
   required String payload,
   required String stripeSignatureHeader,

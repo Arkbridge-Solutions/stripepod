@@ -53,6 +53,24 @@ class Endpoints extends _i1.EndpointDispatch {
                 params['productId'],
               ),
         ),
+        'getPaymentById': _i1.MethodConnector(
+          name: 'getPaymentById',
+          params: {
+            'stripeIntentId': _i1.ParameterDescription(
+              name: 'stripeIntentId',
+              type: _i1.getType<String>(),
+              nullable: false,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async => (endpoints['pay'] as _i2.PayEndpoint).getPaymentById(
+                session,
+                params['stripeIntentId'],
+              ),
+        ),
       },
     );
     connectors['product'] = _i1.EndpointConnector(
