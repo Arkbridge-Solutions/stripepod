@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "stripe-ios-spm",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/stripe/stripe-ios-spm",
+      "state" : {
+        "revision" : "c60d793ea4f3bee052532d55323f0961206e89af",
+        "version" : "24.23.0"
+      }
+    }
+  ],
+  "version" : 2
+}

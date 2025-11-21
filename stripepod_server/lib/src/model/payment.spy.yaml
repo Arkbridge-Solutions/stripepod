@@ -1,0 +1,11 @@
+# Basic payment model to handle store payments
+class: Payment
+table: payments
+fields:
+  stripeId: String
+  amount: int
+  currency: String
+  status: PaymentStatus
+  createdAt: DateTime
+  
+  

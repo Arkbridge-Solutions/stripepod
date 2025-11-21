@@ -1,0 +1,6 @@
+# info about the stripe payment meant to sent to the client
+class: StripePaymentInfo
+fields:
+  paymentIntentId: String
+  clientSecret: String
+  

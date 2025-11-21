@@ -1,2 +1,5 @@
-greeting:
-  - hello:
+pay:
+  - pay:
+  - getPaymentById:
+product:
+  - getProduct:
