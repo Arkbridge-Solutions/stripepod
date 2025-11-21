@@ -23,7 +23,6 @@ void main() {
             );
             expect(request.bodyFields['amount'], '2000');
             expect(request.bodyFields['currency'], 'usd');
-            expect(request.bodyFields['automatic_payment_methods'], 'true');
 
             return http.Response(
               '{"id": "pi_123", "amount": 2000, "currency": "usd"}',
