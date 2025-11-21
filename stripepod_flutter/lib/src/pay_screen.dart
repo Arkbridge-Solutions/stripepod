@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:stripepod_client/stripepod_client.dart';
+import 'package:stripepod_flutter/src/retry.dart';
 
 class PayScreen extends StatefulWidget {
   const PayScreen({
@@ -51,18 +52,26 @@ class _PayScreenState extends State<PayScreen> {
     );
 
     try {
-      final paymentIntentSecret = await widget.client.pay.pay(1);
+      final paymentInfo = await widget.client.pay.pay(1);
       paymentResultNotifier.value = 'Received intent starting paymentsheet';
       await Stripe.instance.initPaymentSheet(
         paymentSheetParameters: SetupPaymentSheetParameters(
-          paymentIntentClientSecret: paymentIntentSecret,
+          paymentIntentClientSecret: paymentInfo.clientSecret,
           billingDetails: billingDetails,
         ),
       );
 
       await Stripe.instance.presentPaymentSheet();
 
-      paymentResultNotifier.value = 'Payment successful!';
+      final payment = await simpleRetry(
+        action: () async {
+          return widget.client.pay.getPaymentById(paymentInfo.clientSecret);
+        },
+        retryWhen: (payment) => payment.status == PaymentStatus.pending,
+      );
+
+      paymentResultNotifier.value =
+          'Payment completed status: ${payment.status}';
     } catch (e) {
       paymentResultNotifier.value = 'Failed to pay: $e';
     }
