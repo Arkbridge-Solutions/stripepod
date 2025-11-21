@@ -1,9 +1,11 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:serverpod_flutter/serverpod_flutter.dart';
 import 'package:stripepod_client/stripepod_client.dart';
 import 'package:stripepod_flutter/src/env.dart';
 import 'package:stripepod_flutter/src/pay_screen.dart';
+import 'package:stripepod_flutter/src/pay_screen_web.dart';
 
 /// Sets up a global client object that can be used to talk to the server from
 /// anywhere in our app. The client is generated from your server code
@@ -46,9 +48,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'StripePod',
       theme: ThemeData(primarySwatch: Colors.indigo),
-      home: PayScreen(
-        client: client,
-      ),
+      home: kIsWeb
+          ? PayScreenWeb(
+              client: client,
+            )
+          : PayScreen(
+              client: client,
+            ),
     );
   }
 }
