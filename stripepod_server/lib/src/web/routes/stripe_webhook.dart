@@ -8,7 +8,7 @@ import 'package:stripepod_server/src/stripe/stripe_webhook_verifier.dart';
 
 class StripeWebhookRoute extends Route {
   /// Creates a new instance of [StripeWebhookRoute].
-  StripeWebhookRoute() : super(methods: {Method.post}, path: '/stripe/webhook');
+  StripeWebhookRoute() : super(methods: {Method.post});
 
   @override
   Future<Result> handleCall(Session session, Request request) async {

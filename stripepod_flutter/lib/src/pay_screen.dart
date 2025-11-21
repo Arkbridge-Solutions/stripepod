@@ -65,7 +65,7 @@ class _PayScreenState extends State<PayScreen> {
 
       final payment = await simpleRetry(
         action: () async {
-          return widget.client.pay.getPaymentById(paymentInfo.clientSecret);
+          return widget.client.pay.getPaymentById(paymentInfo.paymentIntentId);
         },
         retryWhen: (payment) => payment.status == PaymentStatus.pending,
       );

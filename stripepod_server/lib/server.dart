@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:serverpod/serverpod.dart';
 import 'package:stripepod_server/src/web/routes/root.dart';
+import 'package:stripepod_server/src/web/routes/stripe_webhook.dart';
 
 import 'src/generated/endpoints.dart';
 import 'src/generated/protocol.dart';
@@ -17,6 +18,8 @@ void run(List<String> args) async {
   // Setup a default page at the web root.
   pod.webServer.addRoute(RootRoute(), '/');
   pod.webServer.addRoute(RootRoute(), '/index.html');
+  pod.webServer.addRoute(StripeWebhookRoute(), '/webhook');
+
   // Serve all files in the web/static relative directory under /.
   final root = Directory(Uri(path: 'web/static').toFilePath());
   pod.webServer.addRoute(StaticRoute.directory(root), '/**');
