@@ -58,6 +58,7 @@ class _PayScreenState extends State<PayScreen> {
         paymentSheetParameters: SetupPaymentSheetParameters(
           paymentIntentClientSecret: paymentInfo.clientSecret,
           billingDetails: billingDetails,
+          merchantDisplayName: 'Arkbridge',
         ),
       );
 
@@ -135,7 +136,7 @@ class _PayScreenState extends State<PayScreen> {
               const SizedBox(height: 32),
               Container(
                 color: Colors.grey.withValues(alpha: 0.4),
-                height: 100,
+                height: 200,
                 padding: const EdgeInsets.all(16.0),
                 child: ValueListenableBuilder(
                   valueListenable: paymentResultNotifier,

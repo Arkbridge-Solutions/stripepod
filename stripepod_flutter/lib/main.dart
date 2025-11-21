@@ -8,7 +8,7 @@ import 'package:stripepod_client/stripepod_client.dart';
 import 'package:stripepod_flutter/src/env.dart';
 import 'package:stripepod_flutter/src/ui/check_payment_web.dart';
 import 'package:stripepod_flutter/src/ui/pay_screen.dart';
-import 'package:stripepod_flutter/src/ui/platforms/pay_screen_web.dart';
+import 'package:stripepod_flutter/src/ui/pay_screen_web.dart';
 
 /// Sets up a global client object that can be used to talk to the server from
 /// anywhere in our app. The client is generated from your server code

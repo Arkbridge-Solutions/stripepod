@@ -3,8 +3,8 @@ import 'package:flutter_stripe_web/flutter_stripe_web.dart';
 import 'package:stripepod_client/stripepod_client.dart';
 import 'package:web/web.dart' as web;
 
-class PayScreenWeb extends StatefulWidget {
-  const PayScreenWeb({
+class PayScreenWebImpl extends StatefulWidget {
+  const PayScreenWebImpl({
     required this.client,
     super.key,
   });
@@ -12,10 +12,10 @@ class PayScreenWeb extends StatefulWidget {
   final Client client;
 
   @override
-  State<PayScreenWeb> createState() => _PayScreenState();
+  State<PayScreenWebImpl> createState() => _PayScreenWebImplState();
 }
 
-class _PayScreenState extends State<PayScreenWeb> {
+class _PayScreenWebImplState extends State<PayScreenWebImpl> {
   late final ValueNotifier<String?> clientSecretNotifier;
   late final ValueNotifier<String> paymentResultNotifier;
 
