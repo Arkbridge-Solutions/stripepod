@@ -2,6 +2,8 @@
 
 **The "Vertical Slice" Boilerplate for robust Flutter payments.**
 
+![StripePod Featured](stripe_pod_featured.png)
+
 *Maintained by [Arkbridge Solutions](https://arkbridge.co.uk)*
 
 ---
