@@ -71,8 +71,7 @@ class _PayScreenWebImplState extends State<PayScreenWebImpl> {
                 child: ConstrainedBox(
                   constraints: BoxConstraints(maxWidth: 800),
 
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: ListView(
                     children: [
                       const SizedBox(height: 32),
                       Row(

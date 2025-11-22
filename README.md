@@ -6,6 +6,8 @@
 
 ---
 
+![StripePod Featured](stripe_pod_featured.png)
+
 ## ⚡ The Opportunity
 When Serverpod came out it was a game changer for Flutter developers because now we could build full-stack applications with a single language (Dart). It is now possible to integrate payments in backend and frontend (on 3 different platforms: Web, Android and iOS) in a single codebase and in just a few hours.
 
