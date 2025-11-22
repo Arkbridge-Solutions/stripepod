@@ -1,4 +1,4 @@
-# Serverpod 3.0 + Stripe Payment Sheet Starter 🚀
+# StripePod: Fullstack Flutter Payments starter kit
 
 **The "Vertical Slice" Boilerplate for robust Flutter payments.**
 
