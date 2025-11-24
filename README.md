@@ -126,4 +126,4 @@ This boilerplate handles the **"First Transaction."** Scaling to subscriptions, 
 
 ---
 
-**Disclaimer**: This code is provided "as is" for educational purposes. Always perform a security audit before deploying financial code to production.
+**Disclaimer**: This code is provided "as is" for educational purposes. Always perform a security audit before deploying financial code to production. Before using this code in production, we recommend you to implement proper authorization of the pay endpoint and app attestation.
